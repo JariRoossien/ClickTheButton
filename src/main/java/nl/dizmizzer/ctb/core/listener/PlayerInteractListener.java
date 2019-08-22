@@ -1,5 +1,6 @@
 package nl.dizmizzer.ctb.core.listener;
 
+import nl.dizmizzer.ctb.core.event.ButtonClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,8 @@ public class PlayerInteractListener implements Listener {
         Block block = event.getClickedBlock();
         if (!block.getType().toString().contains("BUTTON")) return;
 
-        Bukkit.getLogger().info(block.getType() + " has been clicked!");
+        //TODO Get Player, check if player is in game, check if button has already been clicked, manage click from BaseGame
+
+        Bukkit.getServer().getPluginManager().callEvent(new ButtonClickEvent(null, "", null));
     }
 }
