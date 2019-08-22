@@ -1,0 +1,4 @@
+name: ClickTheButton
+version: ${project.version}
+main: nl.dizmizzer.ctb.core.ClickTheButton
+description: Click The Button Gamemode. Known from Minecraft Monday hosted by keemstar.
