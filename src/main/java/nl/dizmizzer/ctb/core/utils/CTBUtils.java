@@ -32,14 +32,7 @@ public class CTBUtils {
         int y = Integer.parseInt(objects[2]);
         int z = Integer.parseInt(objects[3]);
 
-        Location location = new Location(world, x, y, z);
+        return new Location(world, x, y, z);
 
-        if (!location.getBlock().getType().toString().contains("BUTTON")) try {
-            throw new ButtonDeserializeException();
-        } catch (ButtonDeserializeException e) {
-            e.printStackTrace();
-        }
-
-        return location;
     }
 }
