@@ -2,6 +2,7 @@ package nl.dizmizzer.ctb.core;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.dizmizzer.ctb.core.commands.CommandManager;
 import nl.dizmizzer.ctb.core.entity.Game;
 import nl.dizmizzer.ctb.core.entity.GameMap;
 import nl.dizmizzer.ctb.core.entity.GamePlayer;
@@ -39,6 +40,7 @@ public final class ClickTheButton extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new ButtonClickListener(), this);
+        getCommand("ctb").setExecutor(new CommandManager());
     }
 
     private synchronized void initGameMap() {

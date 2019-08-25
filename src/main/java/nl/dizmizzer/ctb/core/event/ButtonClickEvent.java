@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.dizmizzer.ctb.core.entity.Game;
 import nl.dizmizzer.ctb.core.entity.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -27,6 +28,7 @@ public class ButtonClickEvent extends Event {
         this.player = player;
         this.button = button;
         this.game = game;
+        Bukkit.getLogger().info("Call received");
     }
 
     @Override

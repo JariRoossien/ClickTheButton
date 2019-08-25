@@ -2,6 +2,7 @@ package nl.dizmizzer.ctb.core.utils;
 
 import nl.dizmizzer.ctb.core.ButtonDeserializeException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -34,5 +35,9 @@ public class CTBUtils {
 
         return new Location(world, x, y, z);
 
+    }
+
+    public static String toColor(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 }

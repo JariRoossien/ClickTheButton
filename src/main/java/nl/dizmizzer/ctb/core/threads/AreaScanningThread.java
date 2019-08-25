@@ -1,5 +1,6 @@
 package nl.dizmizzer.ctb.core.threads;
 
+import nl.dizmizzer.ctb.core.ClickTheButton;
 import nl.dizmizzer.ctb.core.entity.GameMap;
 import nl.dizmizzer.ctb.core.entity.GamePlayer;
 import org.bukkit.Bukkit;
@@ -42,5 +43,6 @@ public class AreaScanningThread implements Runnable {
         Bukkit.getLogger().info("{count} buttons have been added!".replace("{count}", "" + buttonList.size()));
         gameMap.setButtons(buttonList);
         gameMap.setLoaded(true);
+        ClickTheButton.getInstance().getActiveGame().setMap(gameMap);
     }
 }

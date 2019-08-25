@@ -2,6 +2,7 @@ package nl.dizmizzer.ctb.core.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.dizmizzer.ctb.core.utils.CTBUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -20,6 +21,10 @@ public class GamePlayer {
     private Game game;
 
     @Getter
+    @Setter
+    private int Score;
+
+    @Getter
     private List<Location> clickedButtons = new ArrayList<>();
 
     public GamePlayer(Player player) {
@@ -32,5 +37,15 @@ public class GamePlayer {
             return null;
         }
         return player;
+    }
+
+    public void addScore(int i) {
+        setScore(getScore() + i);
+    }
+
+    public void sendMessage(String msg) {
+        if (getPlayer() != null) {
+            getPlayer().sendMessage(CTBUtils.toColor(msg));
+        }
     }
 }

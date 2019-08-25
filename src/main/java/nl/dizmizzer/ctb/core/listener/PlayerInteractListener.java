@@ -28,9 +28,7 @@ public class PlayerInteractListener implements Listener {
 
         Block block = event.getClickedBlock();
         if (!block.getType().toString().contains("BUTTON")) return;
-
-        //TODO Get Player, check if player is in game, check if button has already been clicked, manage click from BaseGame
-
+        l.info("Called event.");
         Bukkit.getServer().getPluginManager().callEvent(new ButtonClickEvent(gamePlayer, block.getLocation(), gamePlayer.getGame()));
     }
 
@@ -42,4 +40,5 @@ public class PlayerInteractListener implements Listener {
         player.setGame(ClickTheButton.getInstance().getActiveGame());
 
     }
+
 }
