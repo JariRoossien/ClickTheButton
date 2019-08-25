@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.dizmizzer.ctb.core.entity.Game;
 import nl.dizmizzer.ctb.core.entity.GamePlayer;
-import nl.dizmizzer.ctb.core.utils.CTBUtils;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -23,9 +22,11 @@ public class ButtonClickEvent extends Event {
     private Game game;
 
     private static HandlerList handler = new HandlerList();
-    public ButtonClickEvent(GamePlayer player, String ser_button, Game game) {
+
+    public ButtonClickEvent(GamePlayer player, Location button, Game game) {
         this.player = player;
-        this.button = CTBUtils.deserializeLocation(ser_button);
+        this.button = button;
+        this.game = game;
     }
 
     @Override
@@ -36,6 +37,5 @@ public class ButtonClickEvent extends Event {
     public static HandlerList getHandlerList() {
         return handler;
     }
-
 
 }

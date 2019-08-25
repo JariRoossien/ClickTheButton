@@ -12,6 +12,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.logging.Logger;
+
 public class PlayerInteractListener implements Listener {
 
     @EventHandler
@@ -19,18 +21,25 @@ public class PlayerInteractListener implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         GamePlayer gamePlayer = ClickTheButton.getInstance().getGamePlayer(event.getPlayer());
 
+        Logger l = Bukkit.getLogger();
+        l.info((ClickTheButton.getInstance() == null) + "");
+        l.info((gamePlayer == null) + "");
+        l.info((gamePlayer.getGame() == null) + "");
+
         Block block = event.getClickedBlock();
         if (!block.getType().toString().contains("BUTTON")) return;
 
         //TODO Get Player, check if player is in game, check if button has already been clicked, manage click from BaseGame
 
-        Bukkit.getServer().getPluginManager().callEvent(new ButtonClickEvent(null, "", null));
+        Bukkit.getServer().getPluginManager().callEvent(new ButtonClickEvent(gamePlayer, block.getLocation(), gamePlayer.getGame()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent event) {
+        GamePlayer player = new GamePlayer(event.getPlayer());
         ClickTheButton.getInstance().getGamePlayer().put(
-                event.getPlayer().getUniqueId(),
-                new GamePlayer(event.getPlayer()));
+                event.getPlayer().getUniqueId(), player);
+        player.setGame(ClickTheButton.getInstance().getActiveGame());
+
     }
 }
