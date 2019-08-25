@@ -22,17 +22,32 @@ public class GameMap {
     private Location spawn_pos;
 
     @Getter @Setter
-    private Map<String,List<GamePlayer>> buttons;
+    private Map<Location, List<GamePlayer>> buttons;
 
     @Getter @Setter
     private String map_name;
+
+    @Getter
+    @Setter
+    private boolean loaded;
 
     public GameMap(Location minPos, Location maxPos, Location spawn, String name) {
         this.minimum_pos = minPos;
         this.maximum_pos = maxPos;
         this.spawn_pos = spawn;
         this.map_name = name;
+
+        if (minPos.getBlockX() > maxPos.getBlockX()) {
+            minimum_pos.setX(maxPos.getBlockX());
+            maximum_pos.setX(minPos.getBlockX());
+        }
+        if (minPos.getBlockY() > maxPos.getBlockY()) {
+            minimum_pos.setY(maxPos.getBlockY());
+            maximum_pos.setY(minPos.getBlockY());
+        }
+        if (minPos.getBlockZ() > maxPos.getBlockZ()) {
+            minimum_pos.setZ(maxPos.getBlockZ());
+            maximum_pos.setZ(minPos.getBlockZ());
+        }
     }
-
-
 }

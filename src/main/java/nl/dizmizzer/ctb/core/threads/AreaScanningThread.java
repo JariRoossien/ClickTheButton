@@ -1,37 +1,46 @@
 package nl.dizmizzer.ctb.core.threads;
 
-import nl.dizmizzer.ctb.core.ClickTheButton;
-import nl.dizmizzer.ctb.core.utils.CTBUtils;
+import nl.dizmizzer.ctb.core.entity.GameMap;
 import nl.dizmizzer.ctb.core.entity.GamePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-public class AreaScanningThread implements Callable {
+public class AreaScanningThread implements Runnable {
+
+    private GameMap gameMap;
+    private Map<Location, List<GamePlayer>> buttonList;
+
+    public AreaScanningThread(GameMap gameMap) {
+        this.gameMap = gameMap;
+        buttonList = new HashMap<>();
+    }
+
     @Override
-    public Map<String, List<GamePlayer>> call() throws Exception {
-        Location min = ClickTheButton.getGameMap().getMinimum_pos();
-        Location max = ClickTheButton.getGameMap().getMaximum_pos();
-        World world = min.getWorld();
-        Map<String, List<GamePlayer>> returning_list = new HashMap<>();
-
-        for (int x = min.getBlockX(); x < max.getBlockX(); x++) {
-            for (int y = min.getBlockY(); y < max.getBlockY(); y++) {
-                for (int z = min.getBlockZ(); z < max.getBlockZ(); z++) {
-                    Location loc = new Location(world, x, y, z);
+    public void run() {
+        Bukkit.getLogger().info("Started scanning the game area!");
+        for (int x = gameMap.getMinimum_pos().getBlockX(); x < gameMap.getMaximum_pos().getBlockX(); x++) {
+            for (int y = gameMap.getMinimum_pos().getBlockY(); y < gameMap.getMaximum_pos().getBlockY(); y++) {
+                for (int z = gameMap.getMinimum_pos().getBlockZ(); z < gameMap.getMaximum_pos().getBlockZ(); z++) {
+                    Location loc = new Location(gameMap.getMinimum_pos().getWorld(), x, y, z);
                     if (loc.getBlock() == null) continue;
-                    if (!loc.getBlock().getType().toString().contains("BUTTON")) continue;
-                    returning_list.put(CTBUtils.serializeLocation(loc), new ArrayList<>());
+                    if (loc.getBlock().getType().toString().contains("BUTTON")) {
+                        buttonList.put(loc, new ArrayList<>());
+                    }
                 }
-
             }
-
         }
-        return returning_list;
+        onFinish();
+    }
+
+    private void onFinish() {
+        Bukkit.getLogger().info("Map has been loaded!");
+        Bukkit.getLogger().info("{count} buttons have been added!".replace("{count}", "" + buttonList.size()));
+        gameMap.setButtons(buttonList);
+        gameMap.setLoaded(true);
     }
 }
